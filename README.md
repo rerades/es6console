@@ -1,155 +1,153 @@
-# ES6Console.com
+# ES6Console.com Project
 
-This is the main repository of es6console.com. A tool for playing around with ECMAScript 6 to 5 transformers.
+Welcome to the ever-evolving repository for es6console.com. This project is intended to be a playground for those interested in ECMAScript 6 to 5 transformers.
 
 ## Table of Contents
-1. [Features](#features)
-1. [Requirements](#requirements)
-1. [Application Structure](#application-structure)
-1. [Development](#development)
+1. [Exciting Features](#exciting-features)
+1. [System Requirements](#system-requirements)
+1. [Project Structure](#project-structure)
+1. [Development Guidelines](#development-guidelines)
   1. [Developer Tools](#developer-tools)
-  1. [Routing](#routing)
-1. [Testing](#testing)
-1. [Deployment](#deployment)
+  1. [App Routing Strategy](#app-routing-strategy)
+1. [Quality Assurance Testing](#quality-assurance-testing)
+1. [Deployment Process](#deployment-process)
 1. [Build System](#build-system)
-  1. [Configuration](#configuration)
-  1. [Globals](#globals)
-  1. [Styles](#styles)
-  1. [Server](#server)
-  1. [Production Optimization](#production-optimization)
+  1. [Configuring Your Environment](#configuring-your-environment)
+  1. [Understanding Globals](#understanding-globals)
+  1. [Styling Guidelines](#styling-guidelines)
+  1. [Optimizations for Production](#optimizations-for-production)
 
-## Features
-* [serverless](http://serverless.com)
-* [react](https://github.com/facebook/react)
-* [redux](https://github.com/rackt/redux)
-* [react-router](https://github.com/rackt/react-router)
-* [webpack](https://github.com/webpack/webpack)
-* [babel](https://github.com/babel/babel)
-* [eslint](http://eslint.org)
+## Exciting Features
+Our toolkit of choice includes popular packages such as: 
+* [Serverless](http://serverless.com)
+* [React](https://github.com/facebook/react)
+* [Redux](https://github.com/rackt/redux)
+* [React Router](https://github.com/rackt/react-router)
+* [Webpack](https://github.com/webpack/webpack)
+* [Babel](https://github.com/babel/babel)
+* [ESLint](http://eslint.org)
 
-## Requirements
-* node `^4.5.0`
-* yarn `^0.17.0` or npm `^3.0.0`
+## System Requirements
+To get started, ensure you have:
+* Node `^4.5.0`
+* Either Yarn `^0.17.0` or npm `^3.0.0`
 
-### Install from source
+### Installation from Source Code
 
-First, clone the project:
+This step involves cloning the project and installing dependencies. Begin with:
 
 ```bash
 $ git clone https://github.com/matthisk/es6console.git <my-project-name>
 $ cd <my-project-name>
 ```
 
-Then install dependencies and check to see it works. It is recommended that you use [Yarn](https://yarnpkg.com/) for deterministic installs, but `npm install` will work just as well.
+Next, install your project dependencies. We recommend [Yarn](https://yarnpkg.com/) as it ensures deterministic installs, but `npm install` works as well.
 
 ```bash
 $ npm install    # Install project dependencies
-$ npm run dev      # Compile and launch (same as `npm start`)
+$ npm run dev    # Compile and launch (same as `npm start`)
 ```
 
-While developing, you will probably rely mostly on `npm dev`; however, there are additional scripts at your disposal:
+Though you will likely rely on `npm dev` more often, additional scripts are available:
 
 |`npm run <script>`|Description|
 |------------------|-----------|
-|`start`|Serves your app at `localhost:8000`. HMR will be enabled in development.|
-|`compile`|Compiles the application to disk (`~/dist` by default).|
-|`dev`|Same as `npm start`, but enables nodemon for the server as well.|
+|`start`|Serves your app at `localhost:8000`. Hot Module Replacement (HMR) will be enabled in development.|
+|`compile`|Compiles the application to disk (`~/dist`.|
+|`dev`|Same as `npm start`, but also enables nodemon for the server.|
 |`test`|Runs unit tests with Karma and generates a coverage report.|
-|`test:dev`|Runs Karma and watches for changes to re-run tests; does not generate coverage reports.|
-|`deploy`|Runs linter, tests, and then, on success, compiles your application to disk.|
-|`deploy:staging`|Same as `deploy` but overrides `NODE_ENV` to "development".|
-|`deploy:prod`|Same as `deploy` but overrides `NODE_ENV` to "production".|
-|`deploy_lambda`|Same as `deploy_lambda` but overrides `NODE_ENV` to "production".|
-|`deploy_lambda:staging`|Same as `deploy_lambda` but overrides `NODE_ENV` to "production".|
-|`deploy_lambda:prod`|Same as `deploy_lambda` but overrides `NODE_ENV` to "production".|
-|`lint`|Lint all `.js` files.|
-|`lint:fix`|Lint and fix all `.js` files. [Read more on this](http://eslint.org/docs/user-guide/command-line-interface.html#fix).|
+|`test:dev`|Runs Karma and watches for changes to re-run tests, but does not generate coverage reports.|
+|`deploy`|Runs linter, tests, and then compiles your application to disk, if tests are successful.|
+|`lint`|Lints all `.js` files.|
+|`lint:fix`|Lints and fixes all `.js` files. [Read more on this](http://eslint.org/docs/user-guide/command-line-interface.html#fix).|
 
-## Application Structure
+(Note: `deploy`, `deploy:staging`, `deploy:prod`, `deploy_lambda`, `deploy_lambda:staging`, and `deploy_lambda:prod` are identical and override `NODE_ENV` to "production".)
+
+## Project Structure
 
 
 ```
 .
-├── bin                      # Build/Start scripts
+├── bin                      # Scripts for building/starting
 ├── config                   # Project and build configurations
-├── public                   # Static public assets (not imported anywhere in source code)
-├── server                   # Express application that provides webpack middleware
-│   └── main.js              # Development Server application entry point
-├── src                      # Application source code
-│   ├── index.html           # Main HTML page container for app
-│   ├── main.js              # Application bootstrap and rendering
-│   ├── components           # Global Reusable Presentational Components
-│   ├── containers           # Global Reusable Container Components
-│   ├── layouts              # Components that dictate major page structure
-│   │   └── CoreLayout.js    # CoreLayout which receives children for each route
-│   │   └── CoreLayout.scss  # Styles related to the CoreLayout
-│   │   └── index.js         # Main file for layout
+├── public                   # Public static assets (not directly imported in source code)
+├── server                   # Express application that enables webpack middleware
+│   └── main.js              # Development Server entry point
+├── src                      # Source code for the application
+│   ├── index.html           # Main HTML page container for the app
+│   ├── main.js              # Bootstrap and rendering for the application
+│   ├── components           # Reusable global presentational components
+│   ├── containers           # Reusable global container components
+│   ├── layouts              # Defines the major structures of a page
+│   │   └── CoreLayout.js    # CoreLayout receives children for each route
+│   │   └── CoreLayout.scss  # Styles related to CoreLayout
+│   │   └── index.js         # Main file for the layout
 │   ├── routes               # Main route definitions and async split points
-│   │   ├── index.js         # Bootstrap main application routes with store
+│   │   ├── index.js         # Bootstrap main application routes with the store
 │   │   ├── Home             # Fractal route
 │   │   │   ├── index.js     # Route definitions and async split points
-│   │   │   ├── assets       # Assets required to render components
-│   │   │   ├── components   # Presentational React Components
+│   │   │   ├── assets       # Assets needed to render components
+│   │   │   ├── components   # Presentational React components
 │   │   │   └── routes **    # Fractal sub-routes (** optional)
 │   ├── store                # Redux-specific pieces
-│   │   ├── createStore.js   # Create and instrument redux store
-│   │   └── reducers.js      # Reducer registry and injection
-│   └── styles               # Application-wide styles (generally settings)
+│   │   ├── createStore.js   # Create and modify redux store
+│   │   └── reducers.js      # Reducer registration and injection
+│   └── styles               # Styles applicable to the entire application
 ├── lambda                   # AWS Lambdas
 └── tests                    # Unit tests
 ```
 
-## Development
+## Development Guidelines
 
 #### Developer Tools
 
-## Testing
-To add a unit test, simply create a `.spec.js` file anywhere in `~/tests`. Karma will pick up on these files automatically, and Mocha and Chai will be available within your test without the need to import them. Coverage reports will be compiled to `~/coverage` by default. If you wish to change what reporters are used and where reports are compiled, you can do so by modifying `coverage_reporters` in `~/config/project.config.js`.
+## Quality Assurance Testing
+Creating a `.spec.js` file within `~/tests` allows us to add a unit test. Karma automatically recognizes and responds to these files. Mocha and Chai are available within the test, with no import required. Coverage reports are compiled to `~/coverage` by default. For changing the type of reports and their compilation location, modify `coverage_reporters` in `~/config/project.config.js`.
 
-## Deployment
-ES6Console is hosted on Amazon S3. When running `npm run deploy` the `~/dist` folder is synced up to the s3 bucket configured in `config/environment.config.js`. The website requires several backend scripts which are hosted on AWS Lambda using the serverless framework. When running `npm run deploy_lambda` these lambdas are automatically deployed.
+## Deployment Process
+ES6Console is hosted on Amazon S3. Running `npm run deploy` syncs the `~/dist` folder to the preconfigured S3 bucket in `config/environment.config.js`. The website uses several backend scripts hosted on AWS Lambda, deployed automatically with serverless framework by running `npm run deploy_lambda`.
 
-### Configuration
+### Configuring Your Environment
 
-Default project configuration can be found in `~/config/project.config.js`. Here you'll be able to redefine your `src` and `dist` directories, adjust compilation settings, tweak your vendor dependencies, and more. For the most part, you should be able to make changes in here **without ever having to touch the actual webpack build configuration**.
+Default configuration for the project can be found under `~/config/project.config.js`. You can redefine `src` and `dist` directories, modify compilation settings, edit your vendor dependencies etc, without the need to interact with the actual webpack build configuration.
 
-If you need environment-specific overrides (useful for dynamically setting API endpoints, for example), you can edit `~/config/environments.config.js` and define overrides on a per-NODE_ENV basis. There are examples for both `development` and `production`, so use those as guidelines. Here are some common configuration options:
+Environment-specific overrides timing can be modified under `~/config/environments.config.js` where overrides can be defined on a per-NODE_ENV basis. Examples for `development` and `production` are given, let these be your guide. Here are some common configuration options:
 
 |Key|Description|
 |---|-----------|
-|`dir_src`|application source code base path|
-|`dir_dist`|path to build compiled application to|
+|`dir_src`|base path for the application source code|
+|`dir_dist`|path to compile the application|
 |`server_host`|hostname for the Express server|
 |`server_port`|port for the Express server|
-|`compiler_devtool`|what type of source-maps to generate (set to `false`/`null` to disable)|
-|`compiler_vendor`|packages to separate into to the vendor bundle|
+|`compiler_devtool`|type of source-maps to generate (set to `false`/`null` to disable)|
+|`compiler_vendor`|packages to split into the vendor bundle|
 
-Webpack is configured to make use of [resolve.root](http://webpack.github.io/docs/configuration.html#resolve-root), which lets you import local packages as if you were traversing from the root of your `~/src` directory. Here's an example:
+Webpack is configured to utilize [resolve.root](http://webpack.github.io/docs/configuration.html#resolve-root), allowing for local package imports as if traversing from `~/src` root. For example:
 
 ```js
 // current file: ~/src/views/some/nested/View.js
-// What used to be this:
+// This:
 import SomeComponent from '../../../components/SomeComponent'
 
-// Can now be this:
-import SomeComponent from 'components/SomeComponent' // Hooray!
+// Can convert to this:
+import SomeComponent from 'components/SomeComponent' // Simplified!
 ```
 
-### Globals
+### Understanding Globals
 
-These are global variables available to you anywhere in your source code. If you wish to modify them, they can be found as the `globals` key in `~/config/project.config.js`. When adding new globals, make sure you also add them to `~/.eslintrc`.
+These are globally available variables across your source code. To modify them, locate the `globals` key in `~/config/project.config.js`. When adding new globals, remember to add them to `~/.eslintrc`.
 
 |Variable|Description|
 |---|---|
-|`process.env.NODE_ENV`|the active `NODE_ENV` when the build started|
+|`process.env.NODE_ENV`|The `NODE_ENV` active when the build started|
 |`__DEV__`|True when `process.env.NODE_ENV` is `development`|
 |`__PROD__`|True when `process.env.NODE_ENV` is `production`|
 |`__TEST__`|True when `process.env.NODE_ENV` is `test`|
 
-### Styles
+### Styling Guidelines
 
-Both `.scss` and `.css` file extensions are supported out of the box. After being imported, styles will be processed with [PostCSS](https://github.com/postcss/postcss) for minification and autoprefixing, and will be extracted to a `.css` file during production builds.
+Our set up supports both `.scss` and `.css` file extensions. Imported styles are processed with [PostCSS](https://github.com/postcss/postcss) for minification and autoprefixing, and they are extracted to a `.css` file during production builds.
 
-### Production Optimization
+### Optimizing for Production
 
-Babel is configured to use [babel-plugin-transform-runtime](https://www.npmjs.com/package/babel-plugin-transform-runtime) so transforms aren't inlined. In production, webpack will extract styles to a `.css` file, minify your JavaScript, and perform additional optimizations such as module deduplication.
+[Babel-plugin-transform-runtime](https://www.npmjs.com/package/babel-plugin-transform-runtime) is used on Babel for transforming in a non-inlined manner. In production, webpack extracts styles to a `.css` file, reduces your JavaScript size, and performs other optimizations like module deduplication.
